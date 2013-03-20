@@ -21,6 +21,8 @@ The following libraries are being used by Progress:
 Todo
 ----
 - Make the application look good on big television screens.
+- Edit/delete departments
+- Edit/delete employees
 
 Changelog
 ---

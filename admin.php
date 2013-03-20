@@ -105,7 +105,7 @@
     			<div class="well well-admin">
     				<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
     					<fieldset>
-    				    	<legend>Members</legend>
+    				    	<legend>Employees</legend>
     				    	<label>Name</label>
     				    	<div class="input-prepend">
     				    	 	<span class="add-on">
