@@ -16,7 +16,9 @@ Instructions
 License
 ---
 Copyright 2013 Pieter Bogaerts
+
 Progress is licenced under the MIT Licence - http://opensource.org/licenses/mit-license.php
+
 The following libraries are being used by Progress:
 - Date Range Picker for Twitter Bootstrap by Dan Grosman is licenced under the Apache Licence, Version 2.0 - http://www.apache.org/licenses/LICENSE-2.0
 - DateJS by Coolite INC. is licenced under the MIT Licence - http://www.datejs.com/license/
@@ -25,7 +27,9 @@ The following libraries are being used by Progress:
 
 Disclaimer
 ---
-Progress was developed within 24 hours by a front-end developer. My goal for this application was making something viable within 24 hours and keeping it fun. Keeping it fun means no hardcore back-end development for me so that's why the admin screen isn't password protected. Also the MySQL queries are pretty straight forward and I did my best to avoid SQL injections but as I mentioned before I'm a real front-end developer and I didn't spent much time on back-end security. That's the reason why I can't be held responsible for any damage or data loss that may occur by using this application. If you are a real back-end developer and like to improve my code please go ahead and fork my repo. 
+Progress was developed within 24 hours by a front-end developer. My goal for this application was making something viable within 24 hours and keeping it fun. Keeping it fun means no hardcore back-end development for me so that's why the admin screen isn't password protected. Also the MySQL queries are pretty straight forward and I did my best to avoid SQL injections but as I mentioned before I'm a real front-end developer and I didn't spent much time on back-end security. 
+
+That's the reason why I can't be held responsible for any damage or data loss that may occur by using this application. If you are a real back-end developer and like to improve my code please go ahead and fork my repo. 
 
 Todo
 ---
