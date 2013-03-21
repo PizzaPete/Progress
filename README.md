@@ -2,7 +2,8 @@ Progress
 ---
 
 A simple and clean progress application to show the progress of a project.
-![Alt text](http://www.goedonthouden.com/dump/progress-front.png "Project overview")
+![Alt text](http://www.goedonthouden.com/dump/progress-front.jpg "Project overview")
+![Alt text](http://www.goedonthouden.com/dump/progress-back.jpg "Progress admin panel")
 
 Instructions
 ---
