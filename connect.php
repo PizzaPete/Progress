@@ -22,10 +22,6 @@
 		echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>New project successfully added.</div>';
 	}
 	
-	if(isset($_GET['updateCancelled'])) {
-		echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>Project was not updated.</div>';
-	}
-	
 	if(isset($_POST['updateProject'])) {
 		$id = $_POST['projectid'];
 		$name = $_POST['projectname'];
@@ -54,6 +50,10 @@
 		echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>Project successfully deleted.</div>';
 	}
 	
+	if(isset($_GET['updateCancelled'])) {
+		echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>Project was not updated.</div>';
+	}
+	
 	if(isset($_POST['addMember'])) {
 		$name = $_POST['name'];
 		$fbid = $_POST['fbid'];
@@ -63,50 +63,49 @@
 		echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>New member successfully added.</div>';
 	}
 	
+	if(isset($_POST['updateMember'])) {
+		$id = $_POST['memberid'];
+		$name = $_POST['name'];
+		$fbid = $_POST['fbid'];
+		$birthday = date("Y-m-d",strtotime(str_replace('/','-',$_POST['birthday'])));
+		$position = $_POST['position'];
+		if (isset($_POST['delete'])) {
+			mysql_query("DELETE FROM members WHERE id = '".mysql_real_escape_string($id)."'"); 
+			echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>Employee successfully deleted.</div>';
+		} else {
+			mysql_query("UPDATE members SET name='".mysql_real_escape_string($name)."', fbid='".mysql_real_escape_string($fbid)."', birthday='".mysql_real_escape_string($birthday)."', function='".mysql_real_escape_string($position)."' WHERE id = '".mysql_real_escape_string($id)."'"); 
+			echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>Employee updated successfully.</div>';
+		}
+	}
+	
+	if(isset($_GET['updateMemberCancelled'])) {
+		echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>Employee was not updated.</div>';
+	}
+	
 	if(isset($_POST['addPosition'])) {
 		$position = $_POST['position'];
 		mysql_query("INSERT INTO positions(name) VALUES('".mysql_real_escape_string($position)."')"); 
 		echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>New department successfully added.</div>';
 	}
 	
-	function getMembers() {	
-		$getPositions = mysql_query("SELECT * FROM positions");
-		echo '<ul class="nav nav-tabs">';
-		$i = 0;
-		$j = 0;
-		$tabs ='';
-		while ($rows = mysql_fetch_array($getPositions)) {
-			if($i == 0) {
-				$class="active";
-			} else {
-				$class = '';
-			}
-			echo '<li class="'.$class.'"><a href="#tab'.$rows['id'].'" data-toggle="tab">'.$rows['name'].'</a></li>';
-				$tabs .= '<div class="tab-pane '.$class.'" id="tab'.$rows['id'].'">';
-				$getMembers = mysql_query("SELECT * FROM members WHERE function = '".$rows['id']."'");
-				while($row = mysql_fetch_array($getMembers)) {
-					if($j == 0) {
-						$class="active";
-					} else {
-						$class="";
-					}
-					
-					$tabs .= '<label class="checkbox inline">';
-					$tabs .= '<input type="checkbox" name="memberbox[]" value="'.$row['id'].'">'.$row['name'];
-					$tabs .= '</label>';
-					//echo $row['name']; 
-				}
-				$tabs .= '</div>';
-				
-			$i++;
+	if(isset($_POST['updateDepartment'])) {
+		$id = $_POST['departmentid'];
+		$name = $_POST['position'];
+		if (isset($_POST['delete'])) {
+			mysql_query("DELETE FROM positions WHERE id = '".mysql_real_escape_string($id)."'"); 
+			echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>Department successfully deleted.</div>';
+		} else {
+			mysql_query("UPDATE positions SET name='".mysql_real_escape_string($name)."' WHERE id = '".mysql_real_escape_string($id)."'"); 
+			echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>Department updated successfully.</div>';
 		}
-		echo '</ul>';
-		echo '<div class="tab-content">'.$tabs.'</div>';
+	}
+	
+	if(isset($_GET['updateDepartmentCancelled'])) {
+		echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>Department was not updated.</div>';
 	}
 	
 	function getProjects() {	
 		$getProjects = mysql_query("SELECT * FROM projects WHERE status = 0 ORDER BY enddate ASC");
-		$tabs ='';
 		while ($rows = mysql_fetch_array($getProjects)) {
 			echo '<li><div class="row"><div class="span3"><strong>'.$rows['project'].'</strong></div>';
 			
@@ -149,7 +148,6 @@
 	
 	function getAllProjects() {	
 		$getProjects = mysql_query("SELECT * FROM projects ORDER BY enddate ASC");
-		$tabs ='';
 		while ($rows = mysql_fetch_array($getProjects)) {
 			if($rows['status'] == 1) { $status = 'Completed'; $class='class="success clickable"'; } else { $status = 'Active'; $class='class="clickable"'; }
 			
@@ -157,13 +155,6 @@
 			echo '<td>'.$rows['project'].'</td>';
 			echo '<td>'.date("d/m/Y",strtotime($rows['enddate'])).'</td>';			
 			echo '<td>'.$status.'</td></tr>';
-		}
-	}
-	
-	function getPositions() {	
-		$getPositions = mysql_query("SELECT * FROM positions");
-		while ($rows = mysql_fetch_array($getPositions)) {
-			echo '<option value="'.$rows['id'].'">'.$rows['name'].'</option>';
 		}
 	}
 	
@@ -184,6 +175,94 @@
 			}
 			echo '<label>Project members</label>';
 			getProjectMembers($rows['members']);
+		}
+	}
+	
+	function getMembers() {	
+		$getPositions = mysql_query("SELECT * FROM positions");
+		echo '<ul class="nav nav-tabs">';
+		$i = 0;
+		$j = 0;
+		$tabs ='';
+		while ($rows = mysql_fetch_array($getPositions)) {
+			if($i == 0) {
+				$class="active";
+			} else {
+				$class = '';
+			}
+			echo '<li class="'.$class.'"><a href="#tab'.$rows['id'].'" data-toggle="tab">'.$rows['name'].'</a></li>';
+				$tabs .= '<div class="tab-pane '.$class.'" id="tab'.$rows['id'].'">';
+				$getMembers = mysql_query("SELECT * FROM members WHERE function = '".$rows['id']."'");
+				while($row = mysql_fetch_array($getMembers)) {
+					if($j == 0) {
+						$class="active";
+					} else {
+						$class="";
+					}
+					
+					$tabs .= '<label class="checkbox inline">';
+					$tabs .= '<input type="checkbox" name="memberbox[]" value="'.$row['id'].'">'.$row['name'];
+					$tabs .= '</label>';
+					//echo $row['name']; 
+				}
+				$tabs .= '</div>';
+				
+			$i++;
+		}
+		echo '</ul>';
+		echo '<div class="tab-content">'.$tabs.'</div>';
+	}
+	
+	function getAllEmployees() {	
+		$getProjects = mysql_query("SELECT * FROM members ORDER BY name");
+		while ($rows = mysql_fetch_array($getProjects)) {			
+			echo '<tr class="clickable" onclick="window.location=\'admin.php?member='.$rows['id'].'\'">';
+			echo '<td>'.$rows['name'].'</td></tr>';
+		}
+	}
+	
+	function getEmployee($id) {	
+		$getProject = mysql_query("SELECT * FROM members WHERE id = '".$id."'");
+		while ($rows = mysql_fetch_array($getProject)) {
+			echo '<input type="hidden" name="memberid" value="'.$id.'">';
+			echo '<label>Name</label>';
+		    echo '<div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span><input type="text" value="'.$rows['name'].'" name="name" placeholder="Richard Branson" required></div>';
+			echo '<label>Facebook ID</label><div class="input-prepend"><span class="add-on"><i class="icon-thumbs-up"></i></span><input class="fbid" data-content="To get a users Facebook ID just fill in their profile url on <a href=\'http://findmyfacebookid.com\' target=\'_blank\'>this</a> page." data-original-title="Facebook ID" data-toggle="popover" data-trigger="focus" data-placement="left" value="'.$rows['fbid'].'" type="text" name="fbid" placeholder="1337" required></div>';
+			echo '<label>Birthday</label><div class="input-prepend"><span class="add-on"><i class="icon-calendar"></i></span><input type="text" class="memberbirthday" name="birthday" placeholder="11/05/1987" value="'.date("d/m/Y",strtotime($rows['birthday'])).'" required></div>';
+			echo '<label>Department</label><div class="input-prepend"><span class="add-on"><i class="icon-briefcase"></i></span><select name="position">';
+			getPositions($rows['function']);
+			echo '</select></div>';
+		}
+	}
+	
+	function getBirthdays() {	
+		$getBirthdays = mysql_query("SELECT * FROM members WHERE birthday + INTERVAL EXTRACT(YEAR FROM NOW()) - EXTRACT(YEAR FROM birthday) YEAR BETWEEN CURRENT_DATE() - INTERVAL 30 DAY AND CURRENT_DATE() + INTERVAL 30 DAY ");
+		
+		echo '<div class="wrapper"><p class="lead">Birthdays</p><ul class="nav nav-tabs nav-stacked">';
+		
+		while ($rows = mysql_fetch_array($getBirthdays)) {
+			$oldDate = $rows['birthday'];
+			$arr = explode('-', $oldDate);
+			$newDate = $arr[2].'-'.$arr[1].'-'.date(Y);
+		
+			$now = time();
+			$birthday = strtotime($newDate);
+			$datediff = $birthday - $now;
+			
+			if((floor($datediff/(60*60*24)) + 1) == 1) {
+				$days = (floor($datediff/(60*60*24)) + 1).' day';
+			} elseif((floor($datediff/(60*60*24)) + 1) == 0) {
+				$days = 'today';
+			} else {
+				$days = (floor($datediff/(60*60*24)) + 1).' days';
+			}
+			
+			echo '<li><strong>'.$days.' - </strong>'.$rows['name'].'</li>';
+		}
+		if(mysql_num_rows($getBirthdays) == 0) {
+			echo '<li>Bummer! No cake within the next 30 days :(</li></ul></div>';
+		} else {
+			echo '</ul></div>';
 		}
 	}
 	
@@ -227,34 +306,32 @@
 		echo '<div class="tab-content">'.$tabs.'</div>';
 	}
 	
-	function getBirthdays() {	
-		$getBirthdays = mysql_query("SELECT * FROM members WHERE birthday + INTERVAL EXTRACT(YEAR FROM NOW()) - EXTRACT(YEAR FROM birthday) YEAR BETWEEN CURRENT_DATE() - INTERVAL 30 DAY AND CURRENT_DATE() + INTERVAL 30 DAY ");
-		
-		echo '<div class="wrapper"><p class="lead">Birthdays</p><ul class="nav nav-tabs nav-stacked">';
-		
-		while ($rows = mysql_fetch_array($getBirthdays)) {
-			$oldDate = $rows['birthday'];
-			$arr = explode('-', $oldDate);
-			$newDate = $arr[2].'-'.$arr[1].'-'.date(Y);
-		
-			$now = time();
-			$birthday = strtotime($newDate);
-			$datediff = $birthday - $now;
-			
-			if((floor($datediff/(60*60*24)) + 1) == 1) {
-				$days = (floor($datediff/(60*60*24)) + 1).' day';
-			} elseif((floor($datediff/(60*60*24)) + 1) == 0) {
-				$days = 'today';
-			} else {
-				$days = (floor($datediff/(60*60*24)) + 1).' days';
-			}
-			
-			echo '<li><strong>'.$days.' - </strong>'.$rows['name'].'</li>';
-		}
-		if(mysql_num_rows($getBirthdays) == 0) {
-			echo '<li>Bummer! No cake within the next 30 days :(</li></ul></div>';
-		} else {
-			echo '</ul></div>';
+	function getAllDepartments() {	
+		$getProjects = mysql_query("SELECT * FROM positions ORDER BY name");
+		while ($rows = mysql_fetch_array($getProjects)) {
+			echo '<tr class="clickable" onclick="window.location=\'admin.php?department='.$rows['id'].'\'">';
+			echo '<td>'.$rows['name'].'</td></tr>';
 		}
 	}
+	
+	function getPositions($id) {	
+		$getPositions = mysql_query("SELECT * FROM positions");
+		while ($rows = mysql_fetch_array($getPositions)) {
+			if($id == $rows['id']) {
+				$class ='selected';
+			} else {
+				$class = '';
+			}
+			echo '<option value="'.$rows['id'].'" '.$class.'>'.$rows['name'].'</option>';
+		}
+	}
+	
+	function getDepartment($id) {	
+		$getProject = mysql_query("SELECT * FROM positions WHERE id = '".$id."'");
+		while ($rows = mysql_fetch_array($getProject)) {
+			echo '<input type="hidden" name="departmentid" value="'.$id.'">';
+			echo '<label>Department name</label>';
+		    echo '<input type="text" value="'.$rows['name'].'" name="position" placeholder="Front-end developer" required>';
+		}
+	}	
 ?>

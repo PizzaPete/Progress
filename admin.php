@@ -102,55 +102,149 @@
 			<?php } ?>
     		</div>
     		<div class="span3">
-    			<div class="well well-admin">
-    				<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
-    					<fieldset>
-    				    	<legend>Employees</legend>
-    				    	<label>Name</label>
-    				    	<div class="input-prepend">
-    				    	 	<span class="add-on">
-    				    	 		<i class="icon-user"></i>
-    				    	 	</span>
-    				    	 	<input type="text" name="name" placeholder="Richard Branson" required>
-    				    	 </div>
-    				    	<label>Facebook ID</label>
-    				    	<div class="input-prepend">
-    				    	 	<span class="add-on">
-    				    	 		<i class="icon-thumbs-up"></i>
-    				    	 	</span>
-    				    		<input id="fbid" data-content="To get a users Facebook ID just fill in their profile url on <a href='http://findmyfacebookid.com' target='_blank'>this</a> page." data-original-title="Facebook ID" data-toggle="popover" data-trigger="focus" data-placement="left" type="text" name="fbid" placeholder="1337" required>
-    				    	</div>
-    				    	<label>Birthday</label>
-    				    	<div class="input-prepend">
-    				    	 	<span class="add-on">
-    				    	 		<i class="icon-calendar"></i>
-    				    	 	</span>
-    				    	 	<input type="text" id="memberbirthday" name="birthday" placeholder="11/05/1987" required>
-    				    	</div>
-    				    	<label>Department</label>
-    				    	<div class="input-prepend">
-    				    	 	<span class="add-on">
-    				    	 		<i class="icon-briefcase"></i>
-    				    	 	</span>
-    				    	 	<select name="position">
-									<?php
-										getPositions();
-									?>
-    				    	 	</select>
-    				    	</div>
-    				    	<button type="submit" name="addMember" class="btn">Add member</button>
-    				 	</fieldset>
-    				</form>
+				<ul class="nav nav-tabs">
+					<?php $editEmployee = $_GET['member'];
+						if(!isset($editEmployee)) {
+					?>
+						<li class="active">
+					<?php } else { ?>
+						<li>
+					<?php } ?>
+						<a href="#employeetab1" data-toggle="tab">Add</a>
+					</li>
+					<?php
+						if(isset($editEmployee)) {
+					?>
+						<li class="active">
+					<?php } else { ?>
+						<li>
+					<?php } ?>
+						<a href="#employeetab2" data-toggle="tab">Edit</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+				    <div class="tab-pane <?php if(!isset($editEmployee)) { ?>active<?php } ?> well well-admin" id="employeetab1">
+    					<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+	    					<fieldset>
+	    				    	<legend>Employees</legend>
+	    				    	<label>Name</label>
+	    				    	<div class="input-prepend">
+	    				    	 	<span class="add-on">
+	    				    	 		<i class="icon-user"></i>
+	    				    	 	</span>
+	    				    	 	<input type="text" name="name" placeholder="Richard Branson" required>
+	    				    	 </div>
+	    				    	<label>Facebook ID</label>
+	    				    	<div class="input-prepend">
+	    				    	 	<span class="add-on">
+	    				    	 		<i class="icon-thumbs-up"></i>
+	    				    	 	</span>
+	    				    		<input class="fbid" data-content="To get a users Facebook ID just fill in their profile url on <a href='http://findmyfacebookid.com' target='_blank'>this</a> page." data-original-title="Facebook ID" data-toggle="popover" data-trigger="focus" data-placement="left" type="text" name="fbid" placeholder="1337" required>
+	    				    	</div>
+	    				    	<label>Birthday</label>
+	    				    	<div class="input-prepend">
+	    				    	 	<span class="add-on">
+	    				    	 		<i class="icon-calendar"></i>
+	    				    	 	</span>
+	    				    	 	<input type="text" class="memberbirthday" name="birthday" placeholder="11/05/1987" required>
+	    				    	</div>
+	    				    	<label>Department</label>
+	    				    	<div class="input-prepend">
+	    				    	 	<span class="add-on">
+	    				    	 		<i class="icon-briefcase"></i>
+	    				    	 	</span>
+	    				    	 	<select name="position">
+										<?php
+											getPositions();
+										?>
+	    				    	 	</select>
+	    				    	</div>
+	    				    	<button type="submit" name="addMember" class="btn">Add member</button>
+	    				 	</fieldset>
+	    				</form>
+					</div>
+					<div class="tab-pane <?php if(isset($editEmployee)) { ?>active<?php } ?> well well-admin" id="employeetab2">
+						<?php if(!isset($editEmployee)) { ?>
+							<legend>Employees</legend>
+							<table class="table table-striped table-hover">
+								<thead>
+									<tr>
+								        <th>Name</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php getAllEmployees(); ?>
+								</tbody>
+							</table>
+						<?php } else { ?>
+							<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+		    					<fieldset>
+									<legend>Edit employee</legend>
+									<?php getEmployee($editEmployee); ?>
+									<input type="checkbox" name="delete" value="delete"> Delete employee
+									<button type="submit" name="updateMember" class="btn btn-primary">Save changes</button>
+									<button type="button" name="cancelUpdate" class="btn" onclick="window.location='admin.php?updateMemberCancelled'">Cancel</button>
+								</fieldset>
+							</form>
+						<?php } ?>
+					</div>
     			</div>
-    			<div class="well well-admin">
-    				<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
-    					<fieldset>
-    				    	<legend>Department</legend>
-    				    	<label>Department name</label>
-    				    	<input type="text" name="position" placeholder="Front-end developer" required>
-    				    	<button type="submit" name="addPosition" class="btn">Add department</button>
-    				 	</fieldset>
-    				</form>
+				<ul class="nav nav-tabs">
+					<?php $editDepartment = $_GET['department'];
+						if(!isset($editDepartment)) {
+					?>
+						<li class="active">
+					<?php } else { ?>
+						<li>
+					<?php } ?>
+						<a href="#departmenttab1" data-toggle="tab">Add</a>
+					</li>
+					<?php
+						if(isset($editDepartment)) {
+					?>
+						<li class="active">
+					<?php } else { ?>
+						<li>
+					<?php } ?>
+						<a href="#departmenttab2" data-toggle="tab">Edit</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+				    <div class="tab-pane <?php if(!isset($editDepartment)) { ?>active<?php } ?> well well-admin" id="departmenttab1">
+    					<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+	    					<fieldset>
+    				    		<legend>Department</legend>
+    				    		<label>Department name</label>
+    				    		<input type="text" name="position" placeholder="Front-end developer" required>
+    				    		<button type="submit" name="addPosition" class="btn">Add department</button>
+    				 		</fieldset>
+    					</form>
+					</div>
+					<div class="tab-pane <?php if(isset($editDepartment)) { ?>active<?php } ?> well well-admin" id="departmenttab2">
+						<?php if(!isset($editDepartment)) { ?>
+							<legend>Edit department</legend>
+							<table class="table table-striped table-hover">
+								<thead>
+									<tr>
+								        <th>Department name</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php getAllDepartments(); ?>
+								</tbody>
+							</table>
+						<?php } else { ?>
+							<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+		    					<fieldset>
+									<legend>Edit department</legend>
+									<?php getDepartment($editDepartment); ?>
+									<input type="checkbox" name="delete" value="delete"> Delete department
+									<button type="submit" name="updateDepartment" class="btn btn-primary">Save changes</button>
+									<button type="button" name="cancelUpdate" class="btn" onclick="window.location='admin.php?updateDepartmentCancelled'">Cancel</button>
+								</fieldset>
+							</form>
+						<?php } ?>
+					</div>
     			</div>
     		</div>
     	</div>
