@@ -60,7 +60,7 @@
 		$birthday = date("Y-m-d",strtotime(str_replace('/','-',$_POST['birthday'])));
 		$position = $_POST['position'];
 		mysql_query("INSERT INTO members(name, fbid, birthday, function) VALUES('".mysql_real_escape_string($name)."', '".mysql_real_escape_string($fbid)."', '".mysql_real_escape_string($birthday)."', '".mysql_real_escape_string($position)."')"); 
-		echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>New member successfully added.</div>';
+		echo '<div class="alert fade in"><button data-dismiss="alert" class="close" type="button">×</button>New employee successfully added.</div>';
 	}
 	
 	if(isset($_POST['updateMember'])) {
