@@ -12,7 +12,7 @@ Progress shows you on a simple way the:
 - Birthdays of your co-workers
 
 ![Alt text](http://goedonthouden.com/dump/progress-front.jpg "Project overview")
-![Alt text](http://goedonthouden.com/dump/progress-back.jpg "Progress admin panel")
+![Alt text](http://goedonthouden.com/dump/progress-backend.jpg "Progress admin panel")
 
 I developed Progress within 24 hours in my own spare time. Just because we needed a more "we" feeling on the running projects at my work.
 To keep it fun 24 hours was the maximum of time I wanted to spent on the project and then see if the project is viable or not. Since I'm a front-end developer I didn't spent a lot of time on the back-end code since that's no fun for me. So if you are a back-end developer and willing to contribute then please go ahead and fork the project.
