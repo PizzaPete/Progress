@@ -126,7 +126,7 @@
 				$labelclass = 'label-warning';
 			} else if(round($progression, 2) > 75) {
 				$progressclass = 'progress-danger';
-				$labelclass = 'label-danger';
+				$labelclass = 'label-important';
 			}
 			
 			echo '<div class="span3 progressbar"><div class="progress '.$progressclass.' progress-striped"><div class="bar" style="width: '.$progression.'%"></div></div></div>';
