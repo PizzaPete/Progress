@@ -236,7 +236,7 @@
 	}
 	
 	function getBirthdays() {	
-		$getBirthdays = mysql_query("SELECT * FROM members WHERE birthday + INTERVAL EXTRACT(YEAR FROM NOW()) - EXTRACT(YEAR FROM birthday) YEAR BETWEEN CURRENT_DATE() - INTERVAL 30 DAY AND CURRENT_DATE() + INTERVAL 30 DAY ");
+		$getBirthdays = mysql_query("SELECT * FROM members WHERE birthday + INTERVAL EXTRACT(YEAR FROM NOW()) - EXTRACT(YEAR FROM birthday) YEAR BETWEEN CURRENT_DATE() - INTERVAL 30 DAY");
 		
 		echo '<div class="wrapper"><p class="lead">Birthdays</p><ul class="nav nav-tabs nav-stacked">';
 		
