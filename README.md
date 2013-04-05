@@ -26,6 +26,8 @@ I've tested progress with the following browsers:
 - Microsoft Internet Explorer 10
 - Microsoft Internet Explorer 9 - does not obey the HTML5 input required tag
 
+I'm now trying to make this work on Node.js. Just for fun and to learn some Node.
+
 Dependencies
 ---
 Progress should work with the most versions of the following software:
@@ -41,11 +43,11 @@ Instructions
 4. Add a department.
 5. Add an employee.
 6. Add a project.
-7. Send me a heads up that you are using my application. I'd love to hear from you!
+7. Send me a heads up that you are using my application. I'd love to hear from you! [@PizzaPete](http://www.twitter.com/PizzaPete/ "Follow me on Twitter")
 
 License
 ---
-Copyright 2013 Pieter Bogaerts
+Copyright 2013 Pieter Bogaerts - [Goedonthouden.com](http://www.goedonthouden.com/ "My Personal Homepage")
 
 Progress is licenced under the MIT Licence - http://opensource.org/licenses/mit-license.php
 
