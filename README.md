@@ -2,7 +2,8 @@ Progress
 ---
 
 A simple and clean progress application to give more insights of a project.
-(I'm now working on a cleaner version of Progress that works with a simple JSON object in combination with Handlebars)
+
+(I'm working on a cleaner version of Progress that works with a simple JSON object in combination with Handlebars)
 
 Progress shows you on a simple way the:
 - Running projects
