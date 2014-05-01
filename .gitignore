@@ -1,5 +1,5 @@
-
 .DS_Store
 .esproj
 node_modules
 **build**
+.sass-cache
