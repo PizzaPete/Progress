@@ -8,21 +8,17 @@
     <link href="css/main.css" rel="stylesheet" media="screen">
   </head>
   <body>
-	<?php require_once 'connect.php'; ?>
   	<div class="navbar navbar-static-top navbar-inverse">
     	<div class="navbar-inner">
-      		<div class="container">
+      		<div class="container-fluid">
         		<a class="brand" href="index.php">Progress</a>
 	     	</div>
       	</div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
     	<div class="row">
     		<div class="span9">
     			<ul class="nav nav-tabs nav-stacked">
-					<?php 
-						getProjects(); 
-					?>
     			</ul>
     		</div>
     		<div class="span3">
@@ -52,13 +48,9 @@
     					</script>
     				</div>
     			  	<div id="date">
-	    			  	<?php echo date('d-m-Y'); ?>
 	    			  	</script>
     			  	</div>
     			</div>
-				<?php 
-					getBirthdays(); 
-				?>
     		</div>
     	</div>
     </div>
@@ -69,6 +61,5 @@
 			$('.userimage').tooltip();			
         });
     </script>
-	<?php mysql_close($link); ?>
   </body>
 </html>
