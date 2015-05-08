@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Progress</title>
+    <title>Progressboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" media="screen">
@@ -11,7 +11,7 @@
   	<div class="navbar navbar-static-top navbar-inverse">
     	<div class="navbar-inner">
       		<div class="container-fluid">
-        		<a class="navbar-brand" href="index.php">Progress</a>
+        		<a class="navbar-brand" href="index.php">Progressboard</a>
 	     	</div>
       	</div>
     </div>
@@ -30,26 +30,23 @@
     			<div class="well">
     				<div id="time">
     					<script type="text/javascript">
-    					function startTime()
-    					{
-    					var today=new Date();
-    					var h=today.getHours();
-    					var m=today.getMinutes();
-    					// add a zero in front of numbers<10
-    					m=checkTime(m);
-    					document.getElementById('time').innerHTML=h+":"+m;
-    					t=setTimeout(function(){startTime()},500);
-    					}
-    					
-    					function checkTime(i)
-    					{
-    					if (i<10)
-    					  {
-    					  i="0" + i;
-    					  }
-    					return i;
-    					}
-    					startTime();
+	    					function startTime() {
+	    						var today=new Date();
+	    						var h=today.getHours();
+	    						var m=today.getMinutes();
+	    						// add a zero in front of numbers<10
+	    						m=checkTime(m);
+	    						document.getElementById('time').innerHTML=h+":"+m;
+	    						t=setTimeout(function(){startTime()},500);
+	    					}
+	    					
+	    					function checkTime(i) {
+	    						if (i<10) {
+	    					  		i="0" + i;
+	    					  	}
+	    						return i;
+	    					}
+	    					startTime();
     					</script>
     				</div>
     			  	<div id="date">
