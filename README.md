@@ -4,7 +4,7 @@ Progress
 Currently working on version 2.0.0
 ---
 
-A simple and clean progress application to give more insights of a project.
+A simple and clean progress application using Firebase to give more insights of a project.
 
 Progress shows you on a simple way the:
 - Running projects
